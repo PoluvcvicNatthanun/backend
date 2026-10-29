@@ -8,10 +8,11 @@ import { NextResponse } from "next/server";
  * Route Handler สำหรับ HTTP Method: GET
  * ทำหน้าที่รองรับ Request แบบ GET ที่เข้ามายัง Endpoint นี้
  */
-export async function GET() {
+export async function GET(request, { params }) {
   try {
+const { id } = await params; // ดึงค่า id จาก params ที่ส่งเข้ามาใน URL
     // พิมพ์ Log ข้อความลงในฝั่งเซิร์ฟเวอร์ (Server Console) เพื่อใช้ในการ Monitor หรือ Debug
-    console.log({ success: true, message: "ดึงข้อมูลผู้ใช้สำเร็จ", status: 200 });
+    console.log({ success: true, message: `ดึงข้อมูลผู้ใช้ ${id} สำเร็จ`, status: 200 });
 
     // ส่ง Response กลับไปยังฝั่ง Client ในรูปแบบ JSON
     // - Argument แรก: ข้อมูล Body ที่ต้องการส่งกลับไป
