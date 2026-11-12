@@ -1,12 +1,13 @@
+// app/src/api/users/route.js (หรือไฟล์ route เดิมที่ใช้งาน)
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import db from '@/app/lib/db';
 
 export async function GET() {
   try {
     // ดึงข้อมูลผู้ใช้ (แนะนำให้ระบุเฉพาะคอลัมน์ที่ต้องใช้ และไม่ควร SELECT password ออกไป)
 
     // หรือหากต้องการดึงทุกคอลัมน์:
-    // const [rows] = await db.query('SELECT * FROM tbl_users');
+    const [rows] = await db.query('SELECT * FROM tbl_users');
 
     return NextResponse.json({
       status: 'ok',
