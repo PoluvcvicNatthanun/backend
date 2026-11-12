@@ -1,44 +1,22 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import db from '@/lib/db';
 
 export async function GET() {
   try {
-    console.log({ success: true, message: "ดึงข้อมูลผู้ใช้สำเร็จ", status: 200 });
-    return NextResponse.json(
-      {
-        success: true,
-        message: "ดึงข้อมูลผู้ใช้สำเร็จ",
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์",
-        error: error instanceof Error ? error.message : "Internal Server Error",
-      },
-      { status: 500 }
-    );
-  }
-}
+    // ดึงข้อมูลผู้ใช้ (แนะนำให้ระบุเฉพาะคอลัมน์ที่ต้องใช้ และไม่ควร SELECT password ออกไป)
 
-export async function POST() {
-  try {
-    console.log({ success: true, message: "เพิ่มข้อมูลผู้ใช้สำเร็จ", status: 201 });
+    // หรือหากต้องการดึงทุกคอลัมน์:
+    // const [rows] = await db.query('SELECT * FROM tbl_users');
+
+    return NextResponse.json({
+      status: 'ok',
+      total: rows.length,
+      data: rows,
+    });
+  } catch (err) {
+    console.error('Database query error:', err);
     return NextResponse.json(
-      {
-        success: true,
-        message: "เพิ่มข้อมูลผู้ใช้สำเร็จ",
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์",
-        error: error instanceof Error ? error.message : "Internal Server Error",
-      },
+      { error: 'Database error', details: err.message },
       { status: 500 }
     );
   }
